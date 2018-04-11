@@ -29,12 +29,13 @@ int main(int argc,char * argv[])
 	pthread_join(t1,NULL);
 	pthread_create(&t2,NULL,sort2,(void *)&ex2);
 	pthread_join(t2,NULL);
-	//pthread_create(&t3,NULL,merge,(void *)&num);
-	//pthread_join(t3,NULL);
+	pthread_create(&t3,NULL,merge,(void *)&num);
+	pthread_join(t3,NULL);
 	for(int i=0;i<num;i++)
 	{
-		printf("%d ",a[i]);
+		printf("%d \n",b[i]);
 	}
+	
 }
 void *sort2(void *param1)
 {
@@ -65,7 +66,7 @@ void *sort2(void *param1)
 	}
 	for(int i=0;i<ex3->end-ex3->start;i++)
 	{
-		printf("%d\n",d[i] );
+		printf("****%d\n",d[i] );
 	}
 
 } 
@@ -98,19 +99,43 @@ void *sort1(void *param1)
 	}
 	for(int i=0;i<ex3->end-ex3->start;i++)
 	{
-		printf("%d\n",c[i] );
+		printf("***%d\n",c[i] );
 	}
 
 } 
 void *merge(void *param3)
 {
 	int *a=(int *)param3;
-	for(int i=0,j=0;i<a/2;i++,j++)
-	{
-		if(a[i]<a[j])
-		{
-			b[i];
-		}
-	}
-
+	int i=0;
+	int j=0;
+	int k=0;
+	int ld=*a/2;
+	int lc=*a-ld;
+	while (i <ld && j <lc)
+    {
+        if (d[i] <= c[j])
+        {
+            b[k] = d[i];
+            i++;
+        }
+        else
+        {
+            b[k] = c[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < ld)
+    {
+        b[k] = d[i];
+        i++;
+        k++;
+    }
+    while (j < lc)
+    {
+        b[k] = c[j];
+        j++;
+        k++;
+    }
+    
 }
