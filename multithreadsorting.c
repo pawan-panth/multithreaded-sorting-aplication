@@ -1,3 +1,5 @@
+
+
 #include<stdio.h>
 #include<pthread.h>
 #include<stdlib.h>
@@ -21,10 +23,21 @@ int main(int argc,char * argv[])
 	{
        a[i]=atoi(argv[i+1]);
 	}
+
 	ex1.start=0;
 	ex1.end=num/2;
 	ex2.start=num/2;
 	ex2.end=num;
+	for(int i=0;i<num/2;i++)
+	{
+		printf("%d ",a[i]);
+	}
+	printf("\t");
+	for(int i=ex2.start;i<ex2.end;i++)
+	{
+		printf("%d ",a[i]);
+	}
+	printf("\n");
 	pthread_create(&t1,NULL,sort1,(void *)&ex1);
 	pthread_join(t1,NULL);
 	pthread_create(&t2,NULL,sort2,(void *)&ex2);
@@ -33,9 +46,9 @@ int main(int argc,char * argv[])
 	pthread_join(t3,NULL);
 	for(int i=0;i<num;i++)
 	{
-		printf("%d \n",b[i]);
+		printf("%d ",b[i]);
 	}
-	
+	printf("\n");
 }
 void *sort2(void *param1)
 {
@@ -45,10 +58,6 @@ void *sort2(void *param1)
 	for(int i=0,j=ex3->start;i<ex3->end;i++,j++)
 	{
 		d[i]=a[j]; 
-	}
-	for(int i=0;i<ex3->end-ex3->start;i++)
-	{
-		printf("%d\n",d[i] );
 	}
 
 	for(int i=0;i<ex3->end-ex3->start;i++)
@@ -66,8 +75,9 @@ void *sort2(void *param1)
 	}
 	for(int i=0;i<ex3->end-ex3->start;i++)
 	{
-		printf("****%d\n",d[i] );
+		printf("%d ",d[i] );
 	}
+	printf("\n");
 
 } 
 void *sort1(void *param1)
@@ -79,11 +89,6 @@ void *sort1(void *param1)
 	{
 		c[i]=a[j];
 	}
-	for(int i=0;i<ex3->end-ex3->start;i++)
-	{
-		printf("%d\n",c[i] );
-	}
-
 	for(int i=0;i<ex3->end-ex3->start;i++)
 	{
 		for(int j=0;j<ex3->end-ex3->start-1;j++)
@@ -99,8 +104,9 @@ void *sort1(void *param1)
 	}
 	for(int i=0;i<ex3->end-ex3->start;i++)
 	{
-		printf("***%d\n",c[i] );
+		printf("%d ",c[i] );
 	}
+	printf("\t");
 
 } 
 void *merge(void *param3)
@@ -109,8 +115,8 @@ void *merge(void *param3)
 	int i=0;
 	int j=0;
 	int k=0;
-	int ld=*a/2;
-	int lc=*a-ld;
+	int lc=*a/2;
+	int ld=*a-lc;
 	while (i <ld && j <lc)
     {
         if (d[i] <= c[j])
